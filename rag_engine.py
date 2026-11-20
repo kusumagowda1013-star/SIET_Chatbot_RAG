@@ -1,12 +1,12 @@
 import faiss
 import numpy as np
 from groq import Gorq
-from pypdf import PDFreader
+from pypdf import PdfReader
 from sentence_transformers import SentenceTransformer
 
 #load pdfs
 def load_pdf(pdf_path):
-  reader = PDFReader(str(pdf_path))
+  reader = PdfReader(str(pdf_path))
   mypages = [ i.extract_text() or "" for i in reader.pages]
   full_text = "\n".join(mypages).strip()
   if not full_text:
@@ -22,7 +22,7 @@ def create_chunks(full_text, chunksize = 500, overlap=100):
     chunk = full_text[start:end]  #[0:500]    [400:500]        [800:1300]
     if chunk.strip():
       chunks.append(chunk)
-    start = end - overlap
+    start = end - overlap         #500-100=400    900-100=800     1300-100=1200
   return chunks
   #Embedding
   def build_vectors(chunks, model_name = "all-MiniLM-L6-v2");
@@ -39,8 +39,8 @@ def create_chunks(full_text, chunksize = 500, overlap=100):
 def load_base(pdf_path = "01_College_Information.pdf"):
   full_text = load_pdf(pdf_path)
   chunks = create_chunks(full_text)
-  embed_model, index = build_vector(chunks)
-  return embed_model, chunks, index 
+  index, embed_model = build_vector(chunks)
+  return index, embed_model, chunks
 
 #retrive
 def retrieve_content(question, embed_model, chunks=3):
