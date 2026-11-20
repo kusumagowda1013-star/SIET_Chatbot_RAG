@@ -1,6 +1,6 @@
 import faiss
 import numpy as np
-from groq import Gorq
+from groq import gorq
 from pypdf import PdfReader
 from sentence_transformers import SentenceTransformer
 
