@@ -44,7 +44,7 @@ def load_base(pdf_path = "01_College_Information.pdf"):
 
 #retrive
 def retrieve_content(question, embed_model, chunks, index, num_chunks = 3):
-  if not question.strip()
+  if not question.strip():
     raise ValueError("Question cannot be blank")
   if num_chunks < 1:
     raise ValueError("Request atleast one or more chunks")
