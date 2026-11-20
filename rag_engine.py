@@ -25,7 +25,7 @@ def create_chunks(full_text, chunksize = 500, overlap=100):
     start = end - overlap         #500-100=400    900-100=800     1300-100=1200
   return chunks
   #Embedding
-  def build_vectors(chunks, model_name = "all-MiniLM-L6-v2");
+  def build_vectors(chunks, model_name = "all-MiniLM-L6-v2"):
     if not chunks:
       raise ValueError("Cannot apply embedding without chunks")
     embed_model = SentenceTransformer(model_name)
