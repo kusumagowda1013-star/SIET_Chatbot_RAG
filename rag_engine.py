@@ -43,12 +43,12 @@ def load_base(pdf_path = "01_College_Information.pdf"):
   return index, embed_model, chunks
 
 #retrive
-def retrieve_content(question, embed_model, chunks=3):
+def retrieve_content(question, embed_model, chunks, index, num_chunks = 3):
   if not question.strip.()
     raise ValueError("Question cannot be blank")
   if num_chunks < 1:
     raise ValueError("Request atleast one or more chunks")
-  query_embed = embed_model.encode([question], convert_yo_numpy = True)
+  query_embed = embed_model.encode([question], convert_to_numpy = True)
   faiss.normalize_L2(query_embed)
   sim_scores, vec_indices = index.search(query_embed, min(num_chunks, len(chunks)))
   background = ""
@@ -58,11 +58,11 @@ def retrieve_content(question, embed_model, chunks=3):
   return background
 
   #Ask:
-  def ask_rag(question, embed_model, chunks, index, api_key, num_chunks, model_name = "openai/gpt-oss-20b"):
+  def ask_rag(question, embed_model, chunks, index, api_key, num_chunks = 3, model_name = "openai/gpt-oss-20b"):
     key = api_key
     if not key:
       raise ValueError("API Key Missing")
-    background = retrieve_content(question, embed_model, chunks, index, num_chunks, model_name = "openai/gpt-oss-20b"):
+    background = retrieve_content(question, embed_model, chunks, index, num_chunks=3, model_name = "openai/gpt-oss-20b"):
     prompt = """You are an professional AI Assitant.
     Answer user question using ONLY document background below.
     Do not invent or assume facts.
