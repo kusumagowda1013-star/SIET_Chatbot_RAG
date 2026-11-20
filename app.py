@@ -35,7 +35,7 @@ if question:
       st.session_state.chat_hist.append(
     {"role" : "assistant" , "content" : answer})
       
-if st.button("Clear chat")
+if st.button("Clear chat"):
   st.session_state.chat_hist = []
   st.rerun()
 
